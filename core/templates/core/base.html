@@ -9,10 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> 
-  {% block title %}
-  AdminLTE 2 | Starter
-  {% endblock title %}
-     </title>
+    AdminLTE 2 | {% block title %}{% endblock title %}
+  </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %} ">
@@ -230,6 +228,8 @@ desired effect
 
   
   </header>
+
+
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -263,9 +263,9 @@ desired effect
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-list"></i> <span>Clientes</span></a></li>
         <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -288,15 +288,23 @@ desired effect
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
+      <h1> 
+        {% block page_header %}
+          Page Header
+        {% endblock %}
+        <small> 
+        {% block page_header_small %}
+          Optional description
+        {% endblock  %}
+        </small>
       </h1>
+     <!--
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
         <li class="active">Here</li>
       </ol>
     </section>
+      --> 
 
     <!-- Main content -->
     <section class="content container-fluid">
@@ -304,7 +312,10 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-
+        
+        {% block content %}  
+        {% endblock  %}
+          
     </section>
     <!-- /.content -->
   </div>

@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block page_header %}
+    Clientes
+{% endblock page_header %}
+    
+
+{% block page_header_small %}
+    Lista de clientes
+{% endblock %}
+    
+{% block content %}
+    <ul>
+    {% for c in client %}
+        <li> <a href="#"></a> {{ c }}</li>    
+    {% endfor %}
+    </ul>
+{% endblock content %}
+
+
+{% block title %}
+    index    
+{% endblock title %}
+    

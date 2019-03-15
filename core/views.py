@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Client
 
 def index(request):
-    return render(request, 'core/base.html')
+    client = Client.objects.all()
+    return render(request, 'core/index.html', {'client':client})
 
 def create(request):
     return HttpResponse('Criar um cliente novo')
