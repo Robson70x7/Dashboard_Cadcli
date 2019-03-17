@@ -1,0 +1,78 @@
+{% extends 'core/base.html' %}
+
+{% block page_header %}
+    Detalhe
+{% endblock  %}
+    
+
+{% block page_header_small %}
+    todas as informações detalhadas
+{% endblock %}
+
+
+{% block content %}
+<section class="invoice">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-user"></i> {{ client | upper }}
+                <div class="pull-right">id: {{client.id}}</div>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col" style="font-size:18px">
+            <div class="form-group">
+                <label><b>Nome:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client| upper }}">
+            </div>
+            
+            <div class="form-group">
+                <label><b>Idade:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.age| upper }}">
+            </div>
+            
+            <div class="form-group">
+                <label><b>Sexo:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.sexo| upper }}">
+            </div>
+            <div class="form-group">
+                <label><b>RG:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.rg| upper }}">
+            </div>
+        </div> 
+
+        <div class="col-sm-6 invoice-col" style="font-size:18px">
+            <div class="form-group">
+                <label><b>CPF:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.cpf| upper }}">
+            </div>
+            
+            <div class="form-group">
+                <label><b>Email:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.email| upper }}">
+            </div>
+            <div class="form-group">
+                <label><b>Data de nascimento:</b></label> 
+                <input type="text" class="form-control form-control-lg" disabled value="{{ client.data_nascimento| date:'d/m/Y' }}">
+            </div>            
+        </div>
+
+        
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="pull-right" action="{% url 'core:delete' client.id %}" method="post">
+                <div class="form-group">
+                    <input type="submit" value="Excluir" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}
+    
+    

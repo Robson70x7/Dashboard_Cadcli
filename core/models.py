@@ -7,11 +7,10 @@ class Client(models.Model):
     rg = models.CharField('RG', max_length=20)
     cpf = models.CharField('CPF', max_length=20)
     email = models.EmailField('E-mail', max_length=50)
-    data_nascimento = models.DateTimeField('Data Nascimento')
+    data_nascimento = models.DateField('Data Nascimento')
 
     def __str__(self):
-        return f'{self.name} {self.sexo}'
-
+        return self.name
 
 class Automovel(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
