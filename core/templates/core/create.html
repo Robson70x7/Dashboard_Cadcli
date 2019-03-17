@@ -16,8 +16,16 @@
 {% if errormessage %}
     <div class="alert alert-danger"> {{ errormessage }}</div>
 {% endif %}
-    
 
+{% if successmessage %}
+    <div class="alert alert-success alert-dismissible show" role="alert">
+        O cliente <strong>{{ client.name }}</strong>, foi cadastrado com sucesso!!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
+    
 <div class="row">
     <div class="col-xs-8 col-xs-offset-1">
         <div class="box box-success">
@@ -35,26 +43,33 @@
                             <span class="input-group-addon"><b>Idade</b></span>
                             <input type="number" required placeholder="Idade" name="age" class="form-control">
                         </div><br>
-                        <div class="input-group">
+                        <div class="form-group input-group">
                             <span class="input-group-addon"><b>Sexo</b></span>
-                            <input type="text" required placeholder="Sexo" name="sexo" class="form-control">
+                            <!--<input type="text" required placeholder="Sexo" name="sexo" class="form-control">-->
+                            <select class="form-control" name="sexo">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feinino">Feminio</option>
+                            </select>
+
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                            <input type="text" required placeholder="RG" name="rg" class="form-control">
+                            <input type="text" required rg-mask name="rg" class="form-control">
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>CPF</b></span>
-                            <input type="text" required placeholder="CPF" name="cpf" class="form-control">
+                            <input type="text" required cpf-mask name="cpf" class="form-control">
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>@</b></span>
-                            <input type="email" required placeholder="Email" name="email" class="form-control">
+                            <input type="email" required name="email" class="form-control">
                         </div><br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                            <input type="datetime" required placeholder="Data de nascmento" name="data_nascimento" class="form-control">
-                        </div><br>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
+                                <input type="text" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control">
+                            </div><br>
+                        </div>
                         <input type="submit" class="btn btn-block btn-primary">
                 </form>
             </div>  

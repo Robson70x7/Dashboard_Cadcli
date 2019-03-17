@@ -13,10 +13,10 @@ class ServiceClient():
         self.email = ''
         self.data_nascimento = ''
 
-    def find(self,id):
+    def find(id):
         return get_object_or_404(Client, id=id)
+        
 
-    
     def get_all(self):
         """
         call -> c = Client.find_all()
@@ -46,5 +46,8 @@ class ServiceClient():
     def delete(self):
         pass
 
-    def edit(self):
-        pass
+    def update(self, **kwargs):
+        Client.objects.update(kwargs)
+        return True
+
+        
