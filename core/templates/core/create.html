@@ -20,7 +20,7 @@
 {% if successmessage %}
     <div class="alert alert-success alert-dismissible show" role="alert">
         O cliente <strong>{{ client.name }}</strong>, foi cadastrado com sucesso!!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -37,37 +37,44 @@
                     {% csrf_token %}
                         <div class="input-group">
                             <span class="input-group-addon"><b>Nome</b></span>
-                            <input required type="text" name="name" placeholder="Nome" class="form-control">
+                            <!--<input required type="text" name="name" placeholder="Nome" class="form-control">-->
+                            {{form.name}}
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>Idade</b></span>
-                            <input type="number" required placeholder="Idade" name="age" class="form-control">
+                            <!--<input type="number" required placeholder="Idade" name="age" class="form-control">-->
+                            {{form.age}}
                         </div><br>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><b>Sexo</b></span>
-                            <!--<input type="text" required placeholder="Sexo" name="sexo" class="form-control">-->
+                            <!--<input type="text" required placeholder="Sexo" name="sexo" class="form-control">
                             <select class="form-control" name="sexo">
                                 <option value="Masculino">Masculino</option>
                                 <option value="Feinino">Feminio</option>
-                            </select>
+                            </select>-->
+                            {{form.sexo}}
 
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                            <input type="text" required rg-mask name="rg" class="form-control">
+                            <!--<input type="text" required rg-mask name="rg" class="form-control">-->
+                            {{ form.rg }}
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>CPF</b></span>
-                            <input type="text" required cpf-mask name="cpf" class="form-control">
+                            <!--<input type="text" required cpf-mask name="cpf" class="form-control">-->
+                            {{ form.cpf }}
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>@</b></span>
-                            <input type="email" required name="email" class="form-control">
+                            <!--<input type="email" required name="email" class="form-control">-->
+                            {{form.email}}
                         </div><br>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                                <input type="text" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control">
+                                <!--<input type="text" datemask required name="data_nascimento" class="form-control datemask">-->
+                                {{ form.data_nascimento }}
                             </div><br>
                         </div>
                         <input type="submit" class="btn btn-block btn-primary">

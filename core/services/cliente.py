@@ -3,7 +3,6 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
 class ServiceClient():
-
     def __init__(self):
         self.name = ''
         self.age = ''
@@ -13,17 +12,15 @@ class ServiceClient():
         self.email = ''
         self.data_nascimento = ''
 
-    def find(id):
-        return get_object_or_404(Client, id=id)
-        
-
     def get_all(self):
         """
         call -> c = Client.find_all()
         return -> Retorna todos clientes.
         """
         return Client.objects.all()
-
+    
+    def find(self, id):
+        return Client.objects.get(id=id)
 
     def create(self):
         """
@@ -46,8 +43,9 @@ class ServiceClient():
     def delete(self):
         pass
 
-    def update(self, **kwargs):
-        Client.objects.update(kwargs)
+    def update(self, id):
+        client = self.find(id=id)
+        
         return True
 
         
