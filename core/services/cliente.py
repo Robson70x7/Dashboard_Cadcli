@@ -20,7 +20,7 @@ class ServiceClient():
         return Client.objects.all()
     
     def find(self, id):
-        return Client.objects.get(id=id)
+        return get_object_or_404(Client, id=id)
 
     def create(self):
         """
@@ -40,8 +40,13 @@ class ServiceClient():
         return new_client
 
 
-    def delete(self):
-        pass
+    def delete(self, id):
+        client = self.find(id)
+        if client:
+            client.delete()
+            return True
+        
+        return False
 
     def update(self, id):
         client = self.find(id=id)

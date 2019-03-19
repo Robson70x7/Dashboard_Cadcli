@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'cadcli.urls'
+ROOT_URLCONF = 'cadcli.urls' 
 
 TEMPLATES = [
     {

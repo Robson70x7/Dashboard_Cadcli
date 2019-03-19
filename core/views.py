@@ -6,10 +6,16 @@ from datetime import datetime
 from .forms import ClientForm
 
 @http.require_GET
-def index(request, **kwargs):
+def index(request):
     cli = ServiceClient()
     clients = cli.get_all()
-    return render(request, 'core/index.html', {'clients':clients})
+    context_view = {'clients':clients}
+
+    if 'messages' in request.session:
+        messages = request.session.pop('messages')
+        context_view.update(messages)
+
+    return render(request, 'core/index.html', context= context_view)
 
 
 def create(request, **kwargs):
@@ -23,6 +29,7 @@ def create(request, **kwargs):
         return redirect('create', {'error_message': 'O formulario não esta em um formato valido'})
     
     return render(request, 'core/create.html', {'form':form})
+
 
 def edit(request, client_id):
     client = ServiceClient().find(client_id)
@@ -42,7 +49,15 @@ def edit(request, client_id):
 
 
 def delete(request, client_id):
-    return HttpResponse(f"Excluir o cliente {client_id}")
+    if 'messages' in request.session:
+        request.session.flush()
+
+    if ServiceClient().delete(client_id):
+        request.session['messages'] = {'success_message':'Cliente excluido com sucesso'}
+        return redirect('/')
+    else:
+        request.session['messages'] = {'error_message':'Falha ao excluido cliente, atualiza a pagina e tente novamente'}
+        return redirect('/')
 
 
 @http.require_GET
@@ -51,6 +66,7 @@ def detail (request, client_id):
     result = client.find(id= client_id)
 
     return render(request, 'core/detail.html', {'client':result})
+
 
 @http.require_POST
 def saveclient(request):
