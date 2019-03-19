@@ -13,11 +13,11 @@
 {% block content %}
 
 <!--VERIFICAÇÃO DE MESSAGENS-->
-{% if errormessage %}
+{% if error_message %}
     <div class="alert alert-danger"> {{ errormessage }}</div>
 {% endif %}
 
-{% if successmessage %}
+{% if success_message %}
     <div class="alert alert-success alert-dismissible show" role="alert">
         O cliente <strong>{{ client.name }}</strong>, foi cadastrado com sucesso!!
         <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
@@ -33,7 +33,7 @@
                 <h3 class="box-title">Criar novo cliente</h3>
             </div>
             <div class="box-body">
-                <form action="{% url 'core:saveclient' %}" method="POST">
+                <form action="{% url 'core:create' %}" method="POST">
                     {% csrf_token %}
                         <div class="input-group">
                             <span class="input-group-addon"><b>Nome</b></span>

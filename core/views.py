@@ -18,17 +18,24 @@ def index(request):
     return render(request, 'core/index.html', context= context_view)
 
 
-def create(request, **kwargs):
+def create(request):
     form = ClientForm(data=request.POST or None)
+    context_view = {'form':form}
 
-    if form.is_valid():
-        form.save()
-        return redirect('create', {'success_message':"Cliente {request.POST['name']}"})
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            request.session['messages'] = {'success_message':'Cliente cadastrado com sucesso'}
+            return redirect('create')
+        else:
+            request.session['messages'] = {'error_message':'O formulario enviado esta com inválido, preencha novamente e envie'}
+            return redirect('create')
     
-    if not form.is_valid():
-        return redirect('create', {'error_message': 'O formulario não esta em um formato valido'})
-    
-    return render(request, 'core/create.html', {'form':form})
+    if 'messages' in request.session:
+        message = request.session.pop('messages')
+        context_view.update(message)
+
+    return render(request, 'core/create.html', context= context_view)
 
 
 def edit(request, client_id):
