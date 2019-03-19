@@ -12,56 +12,67 @@
 {% endblock  %}
 
 {% block content %}
+
+<!--VERIFICAÇÃO DE MESSAGENS-->
+{% if error_message %}
+    <div class="alert alert-danger"> {{ error_message }}</div>
+{% endif %}
+
+{% if success_message %}
+    <div class="alert alert-success alert-dismissible show" role="alert">
+        Atualização feita com sucesso!!
+        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}
+    
 <div class="row">
     <div class="col-xs-8 col-xs-offset-1">
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Criar novo cliente</h3>
                 <div class="pull-right">
-                    Id: {{ client.id }}
+                    Id: {{ client_id }}
                 </div>
             </div>
             <div class="box-body">
-                <form action="{% url 'core:edit_post' %}" method="POST">
+                <form action="{% url 'core:edit' client_id %}" method="POST">
                     {% csrf_token %}
                     <div class="input-group">
                         <span class="input-group-addon"><b>Nome</b></span>
-                        <input required type="text" name="name" placeholder="Nome" value="{{ client.name }}" class="form-control">
+                        <!--<input required type="text" name="name" placeholder="Nome" value="{{ client.name }}" class="form-control">-->
+                        {{ form.name }}
                     </div><br>
                     <div class="input-group">
                         <span class="input-group-addon"><b>Idade</b></span>
-                        <input type="number" required placeholder="Idade" name="age" value="{{ client.age }}" class="form-control">
+                        <!--<input type="number" required placeholder="Idade" name="age" value="{{ client.age }}" class="form-control">-->
+                        {{ form.age }}
                     </div><br>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><b>Sexo</b></span>
-                            {% if client.data_nascimento == 'Masculino' %}
-                            <select class="form-control" name="sexo">
-                                <option value="Masculino" selected>Masculino</option>
-                                <option value="Feinino">Feminio</option>
-                            </select>
-                            {% else %}
-                            <select class="form-control" name="sexo">
-                                <option value="Masculino" >Masculino</option>
-                                <option value="Feinino" selected>Feminio</option>
-                            </select>
-                            {% endif %}
+                            {{ form.sexo }}
                     </div><br>
                     <div class="input-group">
                         <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                        <input type="text" required rg-mask name="rg" value="{{ client.rg }}" class="form-control">
+                        <!-- <input type="text" required rg-mask name="rg" value="{{ client.rg }}" class="form-control"> -->
+                        {{ form.rg }}
                     </div><br>
                     <div class="input-group">
                         <span class="input-group-addon"><b>CPF</b></span>
-                        <input type="text" required cpf-mask name="cpf" value="{{ client.cpf }}" class="form-control">
+                        <!-- <input type="text" required cpf-mask name="cpf" value="{{ client.cpf }}" class="form-control"> -->
+                        {{ form.cpf }}
                     </div><br>
                     <div class="input-group">
                         <span class="input-group-addon"><b>@</b></span>
-                        <input type="email" required name="email" value="{{ client.email }}" class="form-control">
+                        <!-- <input type="email" required name="email" value="{{ client.email }}" class="form-control"> -->
+                        {{ form.email }}
                     </div><br>
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                            <input type="text" value="{{ client.data_nascimento  }}" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control">
+                            <!-- <input type="text" value="{{ client.data_nascimento  }}" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control"> -->
+                            {{ form.data_nascimento }}
                         </div><br>
                     </div>
                     <input type="submit" value="Atualizar" class="btn btn-block btn-primary">

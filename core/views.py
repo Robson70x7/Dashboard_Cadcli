@@ -6,30 +6,39 @@ from datetime import datetime
 from .forms import ClientForm
 
 @http.require_GET
-def index(request):
+def index(request, **kwargs):
     cli = ServiceClient()
     clients = cli.get_all()
     return render(request, 'core/index.html', {'clients':clients})
 
 
-def create(request):
-    form = ClientForm(data=request.POST)
+def create(request, **kwargs):
+    form = ClientForm(data=request.POST or None)
 
     if form.is_valid():
-        return redirect('index')
+        form.save()
+        return redirect('create', {'success_message':"Cliente {request.POST['name']}"})
     
-    return render(request, 'core/create.html', {'form': form})
+    if not form.is_valid():
+        return redirect('create', {'error_message': 'O formulario não esta em um formato valido'})
+    
+    return render(request, 'core/create.html', {'form':form})
 
 def edit(request, client_id):
-    client = ServiceClient()
-    result = client.find(id=client_id)
-    return render(request, 'core/edit.html', {'client':result})
+    client = ServiceClient().find(client_id)
+    form = ClientForm(request.POST or None, instance=client)
+    context_view = {}
 
+    if request.method == 'POST':
+        if form.is_valid(): 
+            form.save()
+            context_view['success_message'] = 'Atualização feita com sucesso!'
+        else:
+            return redirect('edit', client_id)
 
-@http.require_POST
-def edit_post(request, client_id):
-    pass
-    
+    context_view.update({'form':form, 'client_id':client.id})
+    return render(request, 'core/edit.html', context= context_view) 
+    context_view.clear()
 
 
 def delete(request, client_id):
