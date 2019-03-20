@@ -68,7 +68,6 @@ def delete(request, client_id):
         return redirect('/')
 
 
-@http.require_GET
 def detail (request, client_id):
     client = ServiceClient()
     result = client.find(id= client_id)
