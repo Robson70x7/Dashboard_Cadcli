@@ -24,60 +24,58 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
 {% endif %}
 <!--CONTEUDO DA PÁGINA-->
 <div class="row">
-    <div class="col-xs-8 col-xs-offset-1">
+    <div class="col-xs-12">
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Criar novo cliente</h3>
             </div>
             <div class="box-body">
-                <form action="{% url 'core:create' %}" method="POST">
-                    {% csrf_token %}
-                        <div class="input-group">
-                            <span class="input-group-addon"><b>Nome</b></span>
-                            <!--<input required type="text" name="name" placeholder="Nome" class="form-control">-->
-                            {{form.name}}
-                        </div><br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><b>Idade</b></span>
-                            <!--<input type="number" required placeholder="Idade" name="age" class="form-control">-->
-                            {{form.age}}
-                        </div><br>
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><b>Sexo</b></span>
-                            <!--<input type="text" required placeholder="Sexo" name="sexo" class="form-control">
-                            <select class="form-control" name="sexo">
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feinino">Feminio</option>
-                            </select>-->
-                            {{form.sexo}}
-
-                        </div><br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                            <!--<input type="text" required rg-mask name="rg" class="form-control">-->
-                            {{ form.rg }}
-                        </div><br>
+                <form id="form_create" action="{% url 'core:create' %}" method="POST">
+                <div class="row">
+                    <div class="col-xs-6">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><b>Nome</b></span>
+                                {{form.name}}
+                            </div><br>
+                            <div class="input-group">
+                                <span class="input-group-addon"><b>Idade</b></span>
+                                {{form.age}}
+                            </div><br>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon"><b>Sexo</b></span>
+                                {{form.sexo}}
+                            </div><br>
+                            <div class="input-group">
+                                <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
+                                {{ form.rg }}
+                            </div><br>
+                        </div>
+                
+                    <div class="col-xs-6">
                         <div class="input-group">
                             <span class="input-group-addon"><b>CPF</b></span>
-                            <!--<input type="text" required cpf-mask name="cpf" class="form-control">-->
                             {{ form.cpf }}
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b>@</b></span>
-                            <!--<input type="email" required name="email" class="form-control">-->
                             {{form.email}}
                         </div><br>
                         <div class="form-group">
+                            <label for="id_data_nascimento">{{ form.data_nascimento.label }}</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                                <!--<input type="text" datemask required name="data_nascimento" class="form-control datemask">-->
                                 {{ form.data_nascimento }}
-                            </div><br>
+                            </div>
                         </div>
-                        <input type="submit" class="btn btn-block btn-primary">
+                    </div>
+                </div>   
+                <input type="submit" class="btn btn-primary">
+                <input type="reset" class="btn btn-default">
                 </form>
             </div>  
         </div>

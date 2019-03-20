@@ -11,7 +11,7 @@ class Client(models.Model):
     sexo = models.CharField('Sexo', max_length=10,choices= SEXO_CHOICES )
     rg = models.CharField('RG', max_length=20)
     cpf = models.CharField('CPF', max_length=20)
-    email = models.EmailField('E-mail', max_length=50)
+    email = models.EmailField('E-mail', unique=True)
     data_nascimento = models.DateField('Data Nascimento')
 
     def __str__(self):

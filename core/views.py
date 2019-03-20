@@ -3,6 +3,7 @@ from .services.cliente import ServiceClient
 from django.views.decorators import http
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import datetime
+from django.urls import reverse
 from .forms import ClientForm
 
 @http.require_GET
@@ -19,14 +20,15 @@ def index(request):
 
 
 def create(request):
-    form = ClientForm(data=request.POST or None)
+    form = ClientForm()
+
     context_view = {'form':form}
 
     if request.method == 'POST':
-        if form.is_valid():
-            form.save()
+        form_preenchido = ClientForm(data=request.POST)
+        if form_preenchido.is_valid():
+            form_preenchido.save()
             request.session['messages'] = {'success_message':'Cliente cadastrado com sucesso'}
-            return redirect('create')
         else:
             request.session['messages'] = {'error_message':'O formulario enviado esta com inválido, preencha novamente e envie'}
             return redirect('create')
@@ -34,7 +36,6 @@ def create(request):
     if 'messages' in request.session:
         message = request.session.pop('messages')
         context_view.update(message)
-
     return render(request, 'core/create.html', context= context_view)
 
 
@@ -73,26 +74,3 @@ def detail (request, client_id):
     result = client.find(id= client_id)
 
     return render(request, 'core/detail.html', {'client':result})
-
-
-@http.require_POST
-def saveclient(request):
-    client = ServiceClient()
-    client.name = request.POST['name']
-    client.age = request.POST['age']
-    client.sexo = request.POST['sexo']
-    client.rg = request.POST['rg']
-    client.cpf = request.POST['cpf']
-    client.email = request.POST['email']
-
-    #Trabalhando o formato de data adequado.
-    data = str(request.POST['data_nascimento']).split('/')
-    formato_datetime = [data[2], data[1], data[0]]
-    newdata = '-'.join(formato_datetime)
-    client.data_nascimento = newdata
-
-    #Salvando na base de dados
-    new_client = client.create();
-
-    return render(request, 'core/create.html', {'client': new_client, 'successmessage': True} )
-
