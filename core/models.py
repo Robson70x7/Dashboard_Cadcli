@@ -7,7 +7,7 @@ SEXO_CHOICES = (
 
 class Client(models.Model):
     name = models.CharField('Nome', max_length=50,)
-    age = models.IntegerField( verbose_name='Idade', default=0)
+    age = models.IntegerField( verbose_name='Idade')
     sexo = models.CharField('Sexo', max_length=10,choices= SEXO_CHOICES )
     rg = models.CharField('RG', max_length=20)
     cpf = models.CharField('CPF', max_length=20)

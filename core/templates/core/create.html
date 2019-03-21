@@ -14,12 +14,17 @@
 
 <!--VERIFICAÇÃO DE MESSAGENS-->
 {% if error_message %}
-    <div class="alert alert-danger"> {{ errormessage }}</div>
+    <div class="alert alert-danger alert-dismissible show" role="alert">
+        {{ error_message }}
+        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 {% endif %}
 
 {% if success_message %}
     <div class="alert alert-success alert-dismissible show" role="alert">
-        O cliente <strong>{{ client.name }}</strong>, foi cadastrado com sucesso!!
+        {{ success_message }}
         <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -82,3 +87,16 @@
     </div>
 </div>
 {% endblock %}
+
+{% block Scripts %}
+<script>
+        $(document).ready(() => {
+            //-Formulario de criação
+            $('#form_create').submit(function(){
+                var name = $('#id_name').val()
+                $('#id_name').val(capitalizeFirstLetter(name.trim()))
+            })
+        })
+    </script>
+{% endblock %}
+    

@@ -15,7 +15,15 @@
 
 <!--VERIFICAÇÃO DE MESSAGENS-->
 {% if error_message %}
-    <div class="alert alert-danger"> {{ error_message }}</div>
+    <div class="alert alert-danger"> 
+        {{ error_message }} <br>
+        
+        {% for error in form.errors.values %}
+            {{error}}
+        {% endfor %}
+            
+             
+    </div>
 {% endif %}
 
 {% if success_message %}
@@ -37,7 +45,7 @@
                 </div>
             </div>
             <div class="box-body">
-                <form action="{% url 'core:edit' client_id %}" method="POST">
+                <form id="form_edit" action="{% url 'core:edit' client_id %}" method="POST">
                     {% csrf_token %}
                     <div class="input-group">
                         <span class="input-group-addon"><b>Nome</b></span>
@@ -82,4 +90,16 @@
     </div>
     </div>
 {% endblock  %}
+
+{% block Scripts %}
+    <script>
+        $(document).ready(() => {
+            //-Formulario de edição
+            $('#form_edit').submit(function(){
+                var name = $('#id_name').val()
+                $('#id_name').val(capitalizeFirstLetter(name.trim()))
+            })
+        })
+    </script>
+{% endblock %}
     

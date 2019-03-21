@@ -10,12 +10,16 @@
 {% endblock %}
 
 
+{% block title %}
+    Detalhe
+{% endblock title %}
+    
 {% block content %}
-<section class="invoice">
+<section class="invoice" id="info_print">
     <div class="row">
         <div class="col-xs-12">
             <h2 class="page-header">
-                <i class="fa fa-user"></i> {{ client | upper }}
+                <i class="fas fa-info-circle"></i> FICHA COMPLETA
                 <div class="pull-right">id: {{client.id}}</div>
             </h2>
         </div>
@@ -58,18 +62,13 @@
                 <input type="text" class="form-control form-control-lg" disabled value="{{ client.data_nascimento| date:'d/m/Y' }}">
             </div>            
         </div>
+    </div>
 
-        
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <form class="pull-right" action="{% url 'core:delete' client.id %}" method="post">
-                <div class="form-group">
-                    <input type="submit" value="Excluir" class="btn btn-danger">
-                </div>
-            </form>
+        <div class="box-footer">
+            <a href="{% url 'core:delete' client.id %}" class="btn btn-danger pull-right">Excluir</a>
+            <a href="#" class="btn btn-default">Imprimir</a>
         </div>
-    </div>
+
 
 </section>
 

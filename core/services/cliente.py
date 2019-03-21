@@ -12,6 +12,14 @@ class ServiceClient():
         self.email = ''
         self.data_nascimento = ''
 
+    def verify_exist_email(self, email):
+        lista = Client.objects.filter(email__exact = email)
+        if lista:
+            return True
+        else:
+            return False
+
+
     def get_all(self):
         """
         call -> c = Client.find_all()

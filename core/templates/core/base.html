@@ -434,6 +434,18 @@ desired effect
   <script src="{% static 'core/libs/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
   <!--Script Pessoal-->
   <script src="{% static 'core/js/pesonal.js' %}"></script>
+  <script>
+      //Faz a captalização dos nomes, robson silva para  Robson Silva
+      function capitalizeFirstLetter(string){
+          return string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+  </script>
+  {% block Scripts %}
+  {% endblock Scripts %}
+    
+  
 </body>
 
+
+  
 </html>
