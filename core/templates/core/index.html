@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% extends 'core/include_base/base.html' %}
 
 {% block page_header %}
     Home
@@ -25,7 +25,7 @@
 {% endif %}
     <div class="row">
         <div class="col-xs-12">
-            <div class="box ox-primary">
+            <div class="box box-default">
                 <div class="box-header">
                     <h3 class="box-title">Lista - Clientes </h3>
                 </div>
@@ -84,4 +84,26 @@
 {% block title %}
     index    
 {% endblock title %}
+
+
+{% block Scripts %}
+    <script>
+        $(document).ready(() => {
+           $('#reload').click((e) => {
+               e.preventDefault()
+               var url_request = $(this).attr('href')
+                $.ajax({
+                    type: 'GET',
+                    url: url_request,
+                    success: (resp) => {
+                        console.log(resp)
+                    },
+                    error: (err) => {
+                        console.log(err)
+                    }
+                })
+           })
+        })
+    </script>
+{% endblock %}
     

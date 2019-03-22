@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, QueryDict
 from datetime import datetime
 from django.urls import reverse
 from .forms import ClientForm
-
+import json
 
 @http.require_GET
 def index(request):
@@ -18,7 +18,6 @@ def index(request):
         context_view.update(messages)
 
     return render(request, 'core/index.html', context= context_view)
-
 
 def create(request):
     """Criar novo usuario """
