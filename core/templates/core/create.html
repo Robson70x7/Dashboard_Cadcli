@@ -1,10 +1,8 @@
 {% extends 'core/include_base/base.html' %}
 
-
 {% block title %}
     Create
-{% endblock %}
-    
+{% endblock %}  
 
 {% block page_header %}
     Criar
@@ -16,6 +14,11 @@
 {% if error_message %}
     <div class="alert alert-danger alert-dismissible show" role="alert">
         {{ error_message }}
+        
+        {% for error in form.errors.values %}
+            {{error}}
+        {% endfor %}
+            
         <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -95,7 +98,10 @@
             $('#form_create').submit(function(){
                 var name = $('#id_name').val()
                 $('#id_name').val(capitalizeFirstLetter(name.trim()))
+                console.log($(this).serialize())
             })
+
+            
         })
     </script>
 {% endblock %}

@@ -19,6 +19,7 @@ def index(request):
 
     return render(request, 'core/index.html', context= context_view)
 
+
 def create(request):
     """Criar novo usuario """
     form = ClientForm()
@@ -39,7 +40,7 @@ def create(request):
             request.session['messages'] = {'success_message':'Cliente cadastrado com sucesso'}
         else:
             request.session['messages'] = {'error_message':'O formulario enviado esta com inválido, preencha novamente e envie'}
-            return redirect('create')
+            return redirect('core:create')
     
     if 'messages' in request.session:
         message = request.session.pop('messages')
@@ -58,7 +59,7 @@ def edit(request, client_id):
             form.save()
             request.session['messages'] = {'success_message':'Atualização feita com sucesso'}
         else:
-            request.session['messages'] = {'error_message':'Erro ao Atualziar cliente'}
+            request.session['messages'] = {'error_message':'Erro ao Atualiziar cliente'}
             context_view.update(request.session.pop('messages'))
             return render(request, 'core/edit.html', context= context_view) 
 

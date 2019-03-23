@@ -16,13 +16,14 @@
 <!--VERIFICAÇÃO DE MESSAGENS-->
 {% if error_message %}
     <div class="alert alert-danger"> 
+        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
         {{ error_message }} <br>
-        
+
         {% for error in form.errors.values %}
             {{error}}
         {% endfor %}
-            
-             
     </div>
 {% endif %}
 
@@ -36,59 +37,69 @@
 {% endif %}
     
 <div class="row">
-    <div class="col-xs-8 col-xs-offset-1">
+    <div class="col-lg-12">
         <div class="box box-success">
             <div class="box-header with-border">
-                <h3 class="box-title">Criar novo cliente</h3>
+                <h3 class="box-title">Atualizar cliente</h3>
                 <div class="pull-right">
                     Id: {{ client_id }}
                 </div>
             </div>
             <div class="box-body">
                 <form id="form_edit" action="{% url 'core:edit' client_id %}" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <span class="input-group-addon"><b>Nome</b></span>
-                        <!--<input required type="text" name="name" placeholder="Nome" value="{{ client.name }}" class="form-control">-->
-                        {{ form.name }}
-                    </div><br>
-                    <div class="input-group">
-                        <span class="input-group-addon"><b>Idade</b></span>
-                        <!--<input type="number" required placeholder="Idade" name="age" value="{{ client.age }}" class="form-control">-->
-                        {{ form.age }}
-                    </div><br>
-                    <div class="form-group input-group">
-                        <span class="input-group-addon"><b>Sexo</b></span>
-                            {{ form.sexo }}
-                    </div><br>
-                    <div class="input-group">
-                        <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                        <!-- <input type="text" required rg-mask name="rg" value="{{ client.rg }}" class="form-control"> -->
-                        {{ form.rg }}
-                    </div><br>
-                    <div class="input-group">
-                        <span class="input-group-addon"><b>CPF</b></span>
-                        <!-- <input type="text" required cpf-mask name="cpf" value="{{ client.cpf }}" class="form-control"> -->
-                        {{ form.cpf }}
-                    </div><br>
-                    <div class="input-group">
-                        <span class="input-group-addon"><b>@</b></span>
-                        <!-- <input type="email" required name="email" value="{{ client.email }}" class="form-control"> -->
-                        {{ form.email }}
-                    </div><br>
-                    <div class="form-group">
+                    <div class="col-lg-6">
+                        {% csrf_token %}
                         <div class="input-group">
-                            <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                            <!-- <input type="text" value="{{ client.data_nascimento  }}" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control"> -->
-                            {{ form.data_nascimento }}
+                            <span class="input-group-addon"><b>Nome</b></span>
+                            <!--<input required type="text" name="name" placeholder="Nome" value="{{ client.name }}" class="form-control">-->
+                            {{ form.name }}
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><b>Idade</b></span>
+                            <!--<input type="number" required placeholder="Idade" name="age" value="{{ client.age }}" class="form-control">-->
+                            {{ form.age }}
+                        </div><br>
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><b>Sexo</b></span>
+                                {{ form.sexo }}
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
+                            <!-- <input type="text" required rg-mask name="rg" value="{{ client.rg }}" class="form-control"> -->
+                            {{ form.rg }}
                         </div><br>
                     </div>
-                    <input type="submit" value="Atualizar" class="btn btn-block btn-primary">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"><b>CPF</b></span>
+                            <!-- <input type="text" required cpf-mask name="cpf" value="{{ client.cpf }}" class="form-control"> -->
+                            {{ form.cpf }}
+                        </div><br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><b>@</b></span>
+                            <!-- <input type="email" required name="email" value="{{ client.email }}" class="form-control"> -->
+                            {{ form.email }}
+                        </div><br>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
+                                <!-- <input type="text" value="{{ client.data_nascimento  }}" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control"> -->
+                                {{ form.data_nascimento }}
+                            </div><br>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="container">
+                                <input type="submit" value="Atualizar" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>  
         </div>
     </div>
-    </div>
+</div>
 {% endblock  %}
 
 {% block Scripts %}
