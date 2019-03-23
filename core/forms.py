@@ -39,4 +39,17 @@ class AutomovelForm(ModelForm):
     class Meta:
         model = Automovel
         fields = ['marca','modelo','ano','cor'] #[marca, modelo, ano, cor]
-
+        widgets = {
+            'marca': TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'modelo': TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'ano': TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'cor': TextInput(attrs={
+                'class':'form-control'
+            })
+        }

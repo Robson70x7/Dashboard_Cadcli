@@ -1,37 +1,37 @@
 {% extends 'core/include_base/base.html' %}
 
 {% block title %}
-    Create
-{% endblock %}  
+Create
+{% endblock %}
 
 {% block page_header %}
-    Criar
+Criar
 {% endblock %}
 
 {% block content %}
 
 <!--VERIFICAÇÃO DE MESSAGENS-->
 {% if error_message %}
-    <div class="alert alert-danger alert-dismissible show" role="alert">
-        {{ error_message }}
-        
-        {% for error in form.errors.values %}
-            {{error}}
-        {% endfor %}
-            
-        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<div class="alert alert-danger alert-dismissible show" role="alert">
+    {{ error_message }}
+
+    {% for error in form.errors.values %}
+    {{error}}
+    {% endfor %}
+
+    <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 {% endif %}
 
 {% if success_message %}
-    <div class="alert alert-success alert-dismissible show" role="alert">
-        {{ success_message }}
-        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<div class="alert alert-success alert-dismissible show" role="alert">
+    {{ success_message }}
+    <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 {% endif %}
 <!--CONTEUDO DA PÁGINA-->
@@ -43,66 +43,74 @@
             </div>
             <div class="box-body">
                 <form id="form_create" action="{% url 'core:create' %}" method="POST">
-                <div class="row">
-                    <div class="col-xs-6">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Nome</b></span>
-                                {{form.name}}
-                            </div><br>
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Idade</b></span>
-                                {{form.age}}
-                            </div><br>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon"><b>Sexo</b></span>
-                                {{form.sexo}}
-                            </div><br>
-                            <div class="input-group">
-                                <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                                {{ form.rg }}
-                            </div><br>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <fieldset>
+                                <legend>Dados Pessoais</legend>
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b>Nome</b></span>
+                                    {{form.name}}
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b>Idade</b></span>
+                                    {{form.age}}
+                                </div><br>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><b>Sexo</b></span>
+                                    {{form.sexo}}
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
+                                    {{ form.rg }}
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b>CPF</b></span>
+                                    {{ form.cpf }}
+                                </div><br>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b>@</b></span>
+                                    {{form.email}}
+                                </div><br>
+                                <div class="form-group">
+                                    <label for="id_data_nascimento">{{ form.data_nascimento.label }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><b><i
+                                                    class="fas fa-calendar-alt"></i></b></span>
+                                        {{ form.data_nascimento }}
+                                    </div>
+                            </fieldset>
                         </div>
-                
-                    <div class="col-xs-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><b>CPF</b></span>
-                            {{ form.cpf }}
-                        </div><br>
-                        <div class="input-group">
-                            <span class="input-group-addon"><b>@</b></span>
-                            {{form.email}}
-                        </div><br>
-                        <div class="form-group">
-                            <label for="id_data_nascimento">{{ form.data_nascimento.label }}</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
-                                {{ form.data_nascimento }}
+                        <div class="col-xs-6">
+                                <fieldset>
+                                    <legend>Automovel</legend>
+                                    
+                                </fieldset>
                             </div>
-                        </div>
                     </div>
-                </div>   
-                <input type="submit" class="btn btn-primary">
-                <input type="reset" class="btn btn-default">
-                </form>
-            </div>  
+                    
+            </div>
+
+            <input type="submit" class="btn btn-primary">
+            <input type="reset" class="btn btn-default">
+            </form>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
 
 {% block Scripts %}
 <script>
-        $(document).ready(() => {
-            //-Formulario de criação
-            $('#form_create').submit(function(){
-                var name = $('#id_name').val()
-                $('#id_name').val(capitalizeFirstLetter(name.trim()))
-                console.log($(this).serialize())
-            })
-
-            
+    $(document).ready(() => {
+        //-Formulario de criação
+        $('#form_create').submit(function () {
+            var name = $('#id_name').val()
+            $('#id_name').val(capitalizeFirstLetter(name.trim()))
+            console.log($(this).serialize())
         })
-    </script>
+
+
+    })
+</script>
 {% endblock %}
-    

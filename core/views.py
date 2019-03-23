@@ -4,7 +4,7 @@ from django.views.decorators import http
 from django.http import HttpResponse, HttpResponseRedirect, QueryDict
 from datetime import datetime
 from django.urls import reverse
-from .forms import ClientForm
+from .forms import ClientForm, AutomovelForm
 import json
 
 @http.require_GET
@@ -23,10 +23,14 @@ def index(request):
 def create(request):
     """Criar novo usuario """
     form = ClientForm()
-    context_view = {'form':form}
+
+    #Implementar o form de Automovel
+    form_auto = AutomovelForm()
+
+    context_view = {'form':form, 'form_auto':form_auto}
     
     if request.method == 'POST':
-        form_preenchido = ClientForm(data=request.POST)
+        form_preenchido = ClientForm(dados_client)
         
         if form_preenchido.is_valid():
             #Verificações
