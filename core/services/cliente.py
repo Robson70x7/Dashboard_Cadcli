@@ -26,9 +26,23 @@ class ServiceClient():
         return -> Retorna todos clientes.
         """
         return Client.objects.all()
+
     
     def find(self, id):
         return get_object_or_404(Client, id=id)
+
+    def create_auto(self, id, kwargs):
+        client = self.find(id)
+        auto = client.automovel_set.create(
+            marca=kwargs['marca'], modelo=kwargs['modelo'],
+            cor=kwargs['cor'], ano=kwargs['ano']
+        )
+        if auto:
+            return True
+        else:
+            False
+
+
 
     def create(self):
         """
@@ -47,6 +61,12 @@ class ServiceClient():
         new_client.save()
         return new_client
 
+    def filter(**kwarg):
+        return get_object_or_404(Client, kwarg)
+
+    @property
+    def latest(self):
+        return Client.objects.latest('id')
 
     def delete(self, id):
         client = self.find(id)

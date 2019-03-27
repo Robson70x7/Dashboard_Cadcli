@@ -1,4 +1,4 @@
-from django.forms  import ModelForm, TextInput, Select, DateInput, EmailInput
+from django.forms  import ModelForm, TextInput, Select, EmailInput, DateInput
 from .models import Client, Automovel
 
 class ClientForm(ModelForm):
@@ -35,21 +35,26 @@ class ClientForm(ModelForm):
             })
         }
 
+
 class AutomovelForm(ModelForm):
     class Meta:
         model = Automovel
-        fields = ['marca','modelo','ano','cor'] #[marca, modelo, ano, cor]
+        fields = ['client','marca','modelo','ano','cor']  #[marca, modelo, ano, cor]
         widgets = {
             'marca': TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder':'Marca'
             }),
             'modelo': TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder':'Modelo'
             }),
             'ano': TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'placeholder': 'Ano'
             }),
             'cor': TextInput(attrs={
-                'class':'form-control'
+                'class':'form-control',
+                'placeholder': 'Cor'
             })
         }

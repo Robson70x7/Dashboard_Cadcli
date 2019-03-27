@@ -5,7 +5,7 @@ Create
 {% endblock %}
 
 {% block page_header %}
-Criar
+   Cadastrar novo cliente
 {% endblock %}
 
 {% block content %}
@@ -16,8 +16,8 @@ Criar
     {{ error_message }}
 
     {% for error in form.errors.values %}
-    {{error}}
-    {% endfor %}
+        {{error}}
+    {% endfor %}}
 
     <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -34,13 +34,33 @@ Criar
 </div>
 
 {% endif %}
+
+    <div class="modal modal-danger fade" id="modal-danger">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modal_title"> Data inválida </h4>
+          </div>
+
+          <div class="modal-body">
+            <p id="modal_body">O formato da data está inválido, corrija antes de enviar o formulário</p>
+          </div>
+
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 <!--CONTEUDO DA PÁGINA-->
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-success">
-            <div class="box-header with-border">
-                <h3 class="box-title">Criar novo cliente</h3>
-            </div>
+            
             <div class="box-body">
                 <form id="form_create" action="{% url 'core:create' %}" method="POST">
                     <div class="row">
@@ -48,52 +68,62 @@ Criar
                             <fieldset>
                                 <legend>Dados Pessoais</legend>
                                 {% csrf_token %}
-                                <div class="input-group">
-                                    <span class="input-group-addon"><b>Nome</b></span>
-                                    {{form.name}}
-                                </div><br>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><b>Idade</b></span>
-                                    {{form.age}}
-                                </div><br>
-                                <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>Sexo</b></span>
-                                    {{form.sexo}}
-                                </div><br>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
-                                    {{ form.rg }}
-                                </div><br>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><b>CPF</b></span>
-                                    {{ form.cpf }}
-                                </div><br>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><b>@</b></span>
-                                    {{form.email}}
-                                </div><br>
                                 <div class="form-group">
-                                    <label for="id_data_nascimento">{{ form.data_nascimento.label }}</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><b><i
-                                                    class="fas fa-calendar-alt"></i></b></span>
-                                        {{ form.data_nascimento }}
-                                    </div>
+                                    <label>{{ form.name.label }}</label>
+                                    {{form.name}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form.age.label }}</label>
+                                    {{form.age}}
+                                </div>
+                                <div class="form-group ">
+                                    <label>{{ form.sexo.label }}</label>
+                                    {{form.sexo}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form.rg.label }}</label>
+                                    {{ form.rg }}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form.cpf.label }}</label>
+                                    {{ form.cpf }}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form.email.label }}</label>
+                                    {{form.email}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form.data_nascimento.label }}</label>
+                                    {{ form.data_nascimento }}
+                                </div>
                             </fieldset>
                         </div>
                         <div class="col-xs-6">
-                                <fieldset>
-                                    <legend>Automovel</legend>
-                                    
-                                </fieldset>
-                            </div>
+                            <fieldset>
+                                <legend class="font-italic">Automovel</legend>
+                                <div class="form-group">
+                                    <label>{{ form_auto.marca.label }}</label>
+                                    {{form_auto.marca}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form_auto.modelo.label }}</label>
+                                    {{form_auto.modelo}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form_auto.cor.label }}</label>
+                                    {{form_auto.cor}}
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ form_auto.ano.label }}</label>
+                                    {{form_auto.ano}}
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
-                    
+                    <input type="submit" class="btn btn-primary">
+                    <input type="reset" class="btn btn-default">
+                </form>
             </div>
-
-            <input type="submit" class="btn btn-primary">
-            <input type="reset" class="btn btn-default">
-            </form>
         </div>
     </div>
 </div>
@@ -102,15 +132,28 @@ Criar
 
 {% block Scripts %}
 <script>
-    $(document).ready(() => {
-        //-Formulario de criação
+    $(document).ready(function(){
+        function data_valida(date){
+            var matches = /(\d{2})[-.\/](\d{2})[-.\/](\d{4})/.exec(date);
+            if (matches == null) {
+                return false;
+            }
+            return true
+        }
+
+        //- Arruma o campo nome
         $('#form_create').submit(function () {
             var name = $('#id_name').val()
             $('#id_name').val(capitalizeFirstLetter(name.trim()))
-            console.log($(this).serialize())
         })
 
-
+        //Valida formato da data_nascimento
+        $('#id_data_nascimento').blur(function (e) {
+            var ipt = $(this)
+            if (!data_valida(ipt.val())){
+                $('#modal-danger').modal()
+            }
+        })
     })
 </script>
 {% endblock %}

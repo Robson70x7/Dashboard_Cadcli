@@ -7,9 +7,11 @@ from django.urls import reverse
 from .forms import ClientForm, AutomovelForm
 import json
 
+service_client = ServiceClient()
+
 @http.require_GET
 def index(request):
-    cli = ServiceClient()
+    cli = service_client
     clients = cli.get_all()
     context_view = {'clients':clients}
 
@@ -23,28 +25,40 @@ def index(request):
 def create(request):
     """Criar novo usuario """
     form = ClientForm()
-
     #Implementar o form de Automovel
     form_auto = AutomovelForm()
-
     context_view = {'form':form, 'form_auto':form_auto}
     
     if request.method == 'POST':
-        form_preenchido = ClientForm(dados_client)
-        
+        dados = request.POST
+        fields_auto = ['client_id','marca','modelo','ano','cor']
+        dados_client = {key:value for key,value in dados.items() if key not in fields_auto}
+        dados_auto = {key:value for key,value in dados.items() if key in fields_auto}
+
+        form_preenchido = ClientForm(dados_client or None)
+
         if form_preenchido.is_valid():
             #Verificações
-            if ServiceClient().verify_exist_email(request.POST['email']):
+            if service_client.verify_exist_email(dados['email']):
                 request.session['messages'] = {'error_message':'Este email ja existe em nossa base de dados, corrija-o e tente novamente'}
                 context_view['form'] = form_preenchido
                 context_view.update(request.session.pop('messages'))
                 return render(request, 'core/create.html', context= context_view)
-           
-            form_preenchido.save()
-            request.session['messages'] = {'success_message':'Cliente cadastrado com sucesso'}
+
+            new_client = form_preenchido.save()
         else:
-            request.session['messages'] = {'error_message':'O formulario enviado esta com inválido, preencha novamente e envie'}
+            request.session['messages'] = {'error_message':'O formulario enviado esta inválido, preencha novamente e envie'}
             return redirect('core:create')
+
+        #Formulario de Automovel
+        cad_auto = service_client.create_auto(new_client.id, dados_auto)
+
+        if not cad_auto:
+            request.session['messages'] = {'error_message':'Cliente cadastrado, porém, Automovel Não cadastrou'}
+            redirect('core:create')
+        else:
+            request.session['messages'] = {'success_message':'Cliente, e automovel cadastrado com sucesso'}
+        
     
     if 'messages' in request.session:
         message = request.session.pop('messages')
@@ -54,7 +68,7 @@ def create(request):
 
 
 def edit(request, client_id):
-    client = ServiceClient().find(client_id)
+    client = service_client.find(client_id)
     form = ClientForm(request.POST or None, instance=client)
     context_view = {'form':form, 'client_id':client.id}
     
@@ -77,7 +91,7 @@ def delete(request, client_id):
     if 'messages' in request.session:
         request.session.flush()
 
-    if ServiceClient().delete(client_id):
+    if service_client.delete(client_id):
         request.session['messages'] = {'success_message':'Cliente excluido com sucesso'}
         return redirect('/')
     else:
@@ -86,7 +100,7 @@ def delete(request, client_id):
 
 
 def detail (request, client_id):
-    client = ServiceClient()
+    client = service_client
     result = client.find(id= client_id)
 
     return render(request, 'core/detail.html', {'client':result})
