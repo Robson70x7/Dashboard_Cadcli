@@ -1,20 +1,25 @@
 from django.shortcuts import render, redirect
-from .services.cliente import ServiceClient
+from  .services.cliente import ServiceClient
 from django.views.decorators import http
 from django.http import HttpResponse, HttpResponseRedirect, QueryDict
 from datetime import datetime
 from django.urls import reverse
 from .forms import ClientForm, AutomovelForm
-import json
+
+service_client = ServiceClient()
 
 service_client = ServiceClient()
 
 @http.require_GET
 def index(request):
+<<<<<<< HEAD
     cli = service_client
     clients = cli.get_all()
+=======
+    clients = service_client.get_all()
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     context_view = {'clients':clients}
-
+    
     if 'messages' in request.session:
         messages = request.session.pop('messages')
         context_view.update(messages)
@@ -30,6 +35,7 @@ def create(request):
     context_view = {'form':form, 'form_auto':form_auto}
     
     if request.method == 'POST':
+        dispose_session(request)
         dados = request.POST
         fields_auto = ['client_id','marca','modelo','ano','cor']
         dados_client = {key:value for key,value in dados.items() if key not in fields_auto}
@@ -51,11 +57,18 @@ def create(request):
             return redirect('core:create')
 
         #Formulario de Automovel
+<<<<<<< HEAD
+=======
+        #client = service_client.latest  # recupera ultimo dado cadastrado
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
         cad_auto = service_client.create_auto(new_client.id, dados_auto)
 
         if not cad_auto:
             request.session['messages'] = {'error_message':'Cliente cadastrado, porém, Automovel Não cadastrou'}
+<<<<<<< HEAD
             redirect('core:create')
+=======
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
         else:
             request.session['messages'] = {'success_message':'Cliente, e automovel cadastrado com sucesso'}
         
@@ -68,6 +81,10 @@ def create(request):
 
 
 def edit(request, client_id):
+<<<<<<< HEAD
+=======
+    dispose_session(request)
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     client = service_client.find(client_id)
     form = ClientForm(request.POST or None, instance=client)
     context_view = {'form':form, 'client_id':client.id}
@@ -88,8 +105,7 @@ def edit(request, client_id):
 
 
 def delete(request, client_id):
-    if 'messages' in request.session:
-        request.session.flush()
+    dispose_session(request)
 
     if service_client.delete(client_id):
         request.session['messages'] = {'success_message':'Cliente excluido com sucesso'}
@@ -104,3 +120,7 @@ def detail (request, client_id):
     result = client.find(id= client_id)
 
     return render(request, 'core/detail.html', {'client':result})
+
+def dispose_session(request):
+    if 'messages' in request.session:
+        request.session.flush()

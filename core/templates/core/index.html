@@ -11,11 +11,16 @@
     
 {% block content %}
 
-{% if error_message %}
-    <div class="alert alert-danger"> {{ error_message }}</div>
+{% if error_message %}  
+    <div class="alert alert-danger alert-dismissible show" role="alert">
+    {{ error_message }}
+    <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>>
 {% endif %}
 
-{% if success_message %}
+{% if success_message == True %}
     <div class="alert alert-success alert-dismissible show" role="alert">
         {{ success_message }}
         <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
@@ -94,26 +99,3 @@
 {% block title %}
     index    
 {% endblock title %}
-
-
-{% block Scripts %}
-    <script>
-        $(document).ready(() => {
-           $('#reload').click((e) => {
-               e.preventDefault()
-               var url_request = $(this).attr('href')
-                $.ajax({
-                    type: 'GET',
-                    url: url_request,
-                    success: (resp) => {
-                        console.log(resp)
-                    },
-                    error: (err) => {
-                        console.log(err)
-                    }
-                })
-           })
-        })
-    </script>
-{% endblock %}
-    

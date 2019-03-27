@@ -12,6 +12,7 @@ class ServiceClient():
         self.email = ''
         self.data_nascimento = ''
 
+
     def verify_exist_email(self, email):
         lista = Client.objects.filter(email__exact = email)
         if lista:
@@ -31,6 +32,10 @@ class ServiceClient():
     def find(self, id):
         return get_object_or_404(Client, id=id)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     def create_auto(self, id, kwargs):
         client = self.find(id)
         auto = client.automovel_set.create(
@@ -43,7 +48,10 @@ class ServiceClient():
             False
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     def create(self):
         """
         fields -> (client)
@@ -68,6 +76,15 @@ class ServiceClient():
     def latest(self):
         return Client.objects.latest('id')
 
+    def filter(**kwarg):
+        return get_object_or_404(Client, kwarg)
+
+
+    @property
+    def latest(self):
+        return Client.objects.latest('id')
+
+
     def delete(self, id):
         client = self.find(id)
         if client:
@@ -75,6 +92,7 @@ class ServiceClient():
             return True
         
         return False
+
 
     def update(self, id):
         client = self.find(id=id)
