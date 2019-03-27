@@ -241,11 +241,7 @@ desired effect
           </ul>
         </div>
       </nav>
-
-
     </header>
-
-
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
@@ -286,8 +282,8 @@ desired effect
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          {% block page_header %}{% endblock %}
-          <small>
+          <span style="margin-left:15px; color:slategray">{% block page_header %}{% endblock %}</span> 
+          <small style="color:slategray">
             {% block page_header_small %}{% endblock  %}
           </small>
         </h1>

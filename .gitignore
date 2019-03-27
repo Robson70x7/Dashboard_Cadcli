@@ -1,1 +1,3 @@
 .vscode
+cadcli/__paycache__
+core/**/__paycache__
