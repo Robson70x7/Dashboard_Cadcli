@@ -32,10 +32,7 @@ class ServiceClient():
     def find(self, id):
         return get_object_or_404(Client, id=id)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     def create_auto(self, id, kwargs):
         client = self.find(id)
         auto = client.automovel_set.create(
@@ -47,28 +44,38 @@ class ServiceClient():
         else:
             False
 
+    def update_auto(self, id, kwargs):
+        client = self.find(id)
+        auto = client.automovel_set.all()
+        auto.marcar = kwargs['marca']
+        auto.modelo = kwargs['modelo']
+        auto.cor = kwargs['cor']
+        auto.ano = kwargs['ano']
+        try:
+            auto.save()
+            return True
+        except:
+            return False
+        
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e7c44c25d6af16bcdc69b961a15878a46ff1e9b4
     def create(self):
         """
         fields -> (client)
         return -> object: Client
         """
-        new_client = Client(
+        new_client = Client( 
             name = self.name,
             age = self.age,
             sexo = self.sexo,
             rg = self.rg,
             cpf =self.cpf,
             email = self.email,
-            data_nascimento = self.data_nascimento
-        )
+            data_nascimento = self.data_nascimento )
+
         new_client.save()
         return new_client
 
+
     def filter(**kwarg):
         return get_object_or_404(Client, kwarg)
 
@@ -76,15 +83,7 @@ class ServiceClient():
     def latest(self):
         return Client.objects.latest('id')
 
-    def filter(**kwarg):
-        return get_object_or_404(Client, kwarg)
-
-
-    @property
-    def latest(self):
-        return Client.objects.latest('id')
-
-
+    
     def delete(self, id):
         client = self.find(id)
         if client:

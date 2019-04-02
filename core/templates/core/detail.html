@@ -26,13 +26,13 @@ Detalhe
                     </h2>
                 </div>
                 <div class="box-body">
-                    <div class="col-sm-6 invoice-col" style="font-size:18px">
+                    <div class="col-sm-6" style="font-size:18px">
+                        <div style="display:block; margin-bottom:10px; border-bottom:2px solid #ccc"><p>Dados Pessoais</p></div>
                         <div class="form-group">
                             <label><b>Nome:</b></label>
                             <input type="text" class="form-control form-control-lg" disabled
                                 value="{{ client| upper }}">
                         </div>
-
                         <div class="form-group">
                             <label><b>Idade:</b></label>
                             <input type="text" class="form-control form-control-lg" disabled
@@ -49,9 +49,6 @@ Detalhe
                             <input type="text" class="form-control form-control-lg" disabled
                                 value="{{ client.rg| upper }}">
                         </div>
-                    </div>
-
-                    <div class="col-sm-6 invoice-col" style="font-size:18px">
                         <div class="form-group">
                             <label><b>CPF:</b></label>
                             <input type="text" class="form-control form-control-lg" disabled
@@ -68,6 +65,33 @@ Detalhe
                             <input type="text" class="form-control form-control-lg" disabled
                                 value="{{ client.data_nascimento| date:'d/m/Y' }}">
                         </div>
+
+                    </div>
+
+                    <div class="col-sm-6 invoice-col" style="font-size:18px">
+                        <div style="display:block; margin-bottom:10px; border-bottom:2px solid #ccc"><p>Dados Automovel</p></div>
+                        {% for auto in client.automovel_set.all %}
+                        <div class="form-group">
+                            <label><b>Marca:</b></label>
+                            <input type="text" class="form-control form-control-lg" disabled
+                                value="{{ auto.marca }}">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Modelo:</b></label>
+                            <input type="text" class="form-control form-control-lg" disabled
+                                value="{{ auto.modelo }}">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Cor:</b></label>
+                            <input type="text" class="form-control form-control-lg" disabled
+                                value="{{ auto.cor }}">
+                        </div>
+                        <div class="form-group">
+                            <label><b>Ano:</b></label>
+                            <input type="text" class="form-control form-control-lg" disabled
+                                value="{{ auto.ano }}">
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="box-footer">

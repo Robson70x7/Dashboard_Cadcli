@@ -1,53 +1,50 @@
 {% extends 'core/include_base/base.html' %}
-{% block title %}
-    edit
-{% endblock %}
 
-{% block page_header %}
-    Editar  
-{% endblock page_header %}
+{% block title %} edit {% endblock %}
 
-{% block page_header_small %}
-    Página de edição.
-{% endblock  %}
+{% block page_header %} Editar {% endblock page_header %}
+
+{% block page_header_small %} Página de edição. {% endblock  %}
 
 {% block content %}
 
 <!--VERIFICAÇÃO DE MESSAGENS-->
 {% if error_message %}
-    <div class="alert alert-danger"> 
-        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        {{ error_message }} <br>
-
-        {% for error in form.errors.values %}
-            {{error}}
-        {% endfor %}
-    </div>
+<div class="alert alert-danger">
+    <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ error_message }} <br>
+    {{form.errors}}
+    
+    {% if errors_form %}
+    {{errors_form}}
+    {% endif %}     
+</div>
 {% endif %}
 
 {% if success_message %}
-    <div class="alert alert-success alert-dismissible show" role="alert">
-        Atualização feita com sucesso!!
-        <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<div class="alert alert-success alert-dismissible show" role="alert">
+    Atualização feita com sucesso!!
+    <button type="button" class="close" style="color:white" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 {% endif %}
-    
+
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Atualizar cliente</h3>
                 <div class="pull-right">
-                    Id: {{ client_id }}
+                    Id: {{ client.id }}
                 </div>
             </div>
             <div class="box-body">
-                <form id="form_edit" action="{% url 'core:edit' client_id %}" method="POST">
-                    <div class="col-lg-6">
+                <form id="form_edit_client" action="{% url 'core:edit_client' client.id %}" method="POST">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-8">
                         {% csrf_token %}
                         <div class="input-group">
                             <span class="input-group-addon"><b>Nome</b></span>
@@ -61,15 +58,13 @@
                         </div><br>
                         <div class="form-group input-group">
                             <span class="input-group-addon"><b>Sexo</b></span>
-                                {{ form.sexo }}
+                            {{ form.sexo }}
                         </div><br>
                         <div class="input-group">
                             <span class="input-group-addon"><b><i class="fas fa-id-card"></i></b></span>
                             <!-- <input type="text" required rg-mask name="rg" value="{{ client.rg }}" class="form-control"> -->
                             {{ form.rg }}
                         </div><br>
-                    </div>
-                    <div class="col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><b>CPF</b></span>
                             <!-- <input type="text" required cpf-mask name="cpf" value="{{ client.cpf }}" class="form-control"> -->
@@ -81,37 +76,75 @@
                             {{ form.email }}
                         </div><br>
                         <div class="form-group">
-                            <label for="id_data_nascimento">{{ form.data_nascimento.label }}</label>
+                            <label>{{ form.data_nascimento.label }}</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><b><i class="fas fa-calendar-alt"></i></b></span>
                                 <!-- <input type="text" value="{{ client.data_nascimento  }}" id="datemask" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required name="data_nascimento" class="form-control"> -->
                                 {{ form.data_nascimento }}
                             </div><br>
-                        </div> 
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="container">
-                                <input type="submit" value="Atualizar" class="btn btn-primary">
-                            </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-1"></div>
+                        <input type="submit" value="Atualizar" class="btn btn-warning">
+                    </div>
                 </form>
-            </div>  
+            </div>
+        </div>
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Automóvel</h3>
+            </div>
+            <div class="box-body">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-8">
+                    <form action="{% url 'core:edit_auto' client.id%}" id="form_auto" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" value="" id="client_field" name="client">
+                            {% for field in form_auto %}
+                                <div class="form-group">
+                                    <!-- {% if field.label != 'Client' %} -->
+                                    {{field.label_tag}}
+                                    {{field}}
+                                    {{ field.errors }}
+                                    <!-- {% endif %} -->
+                                </div>
+                            {% endfor %}
+                                
+                            
+                        </div>
+                        <br>
+                        <input type="submit" value="Atualizar" class="btn btn-warning">
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
 {% endblock  %}
 
 {% block Scripts %}
-    <script>
-        $(document).ready(() => {
-            //-Formulario de edição
-            $('#form_edit').submit(function(){
-                var name = $('#id_name').val()
-                $('#id_name').val(capitalizeFirstLetter(name.trim()))
-            })
+<script>
+    $(document).ready(() => {
+        
+        function set_Client_id(){
+            var path_url = window.location.pathname
+            var lista = path_url.split('/')
+            lista.splice(0,1)
+            lista.splice(lista.indexOf(''),1)
+            var valor = lista[lista.length -1]
+            $('#client_field').val(valor)
+        }
+        
+        set_Client_id()
+
+        //-Formulario de edição
+        $('#id_name').blur(function () {
+            var name = $('#id_name').val()
+            $('#id_name').val(capitalizeFirstLetter(name.trim()))
         })
-    </script>
+    })
+</script>
 {% endblock %}
-    

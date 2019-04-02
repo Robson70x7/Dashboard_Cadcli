@@ -142,7 +142,7 @@ Create
         }
 
         //- Arruma o campo nome
-        $('#form_create').submit(function () {
+        $('#id_name').blur(function () {
             var name = $('#id_name').val()
             $('#id_name').val(capitalizeFirstLetter(name.trim()))
         })
