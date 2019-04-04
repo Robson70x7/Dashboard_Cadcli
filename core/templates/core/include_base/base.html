@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="{% static 'core/css/font-awesome/css/font-awesome.min.css' %} ">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <!--DataTables-->
-  <link rel="stylesheet" href="{% static 'core/libs/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'core/libs/datatables.net-bs/css/dataTables.bootstrap.min.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'core/libs/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/libs/DataTables/Responsive-2.2.2/css/responsive.dataTables.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'core/css/AdminLTE.min.css' %} ">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -287,7 +289,7 @@ desired effect
     </section>
       -->
         <!-- Main content -->
-        <section class="content container-fluid">
+        <section id="slimscroll" class="content container-fluid">
           <!--------------------------
         | Your Page Content Here |
         -------------------------->
@@ -309,77 +311,7 @@ desired effect
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Create the tabs -->
-      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fas fa-home"></i></a></li>
-        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fas fa-gears"></i></a></li>
-      </ul>
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- Home tab content -->
-        <div class="tab-pane active" id="control-sidebar-home-tab">
-          <h3 class="control-sidebar-heading">Recent Activity</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:;">
-                <i class="menu-icon fas fa-birthday-cake bg-red"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                  <p>Will be 23 on April 24th</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-          <h3 class="control-sidebar-heading">Tasks Progress</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:;">
-                <h4 class="control-sidebar-subheading">
-                  Custom Template Design
-                  <span class="pull-right-container">
-                    <span class="label label-danger pull-right">70%</span>
-                  </span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-        </div>
-        <!-- /.tab-pane -->
-        <!-- Stats tab content -->
-        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-        <!-- /.tab-pane -->
-        <!-- Settings tab content -->
-        <div class="tab-pane" id="control-sidebar-settings-tab">
-          <form method="post">
-            <h3 class="control-sidebar-heading">General Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Report panel usage
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Some information about this general settings option
-              </p>
-            </div>
-            <!-- /.form-group -->
-          </form>
-        </div>
-        <!-- /.tab-pane -->
-      </div>
-    </aside>
+    {% include 'core/include_base/control_sidebar.html' %}
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
     immediately after the control sidebar -->
@@ -404,8 +336,10 @@ desired effect
   <script src="{% static 'core/libs/input-mask/min/inputmask/inputmask.numeric.extensions.min.js' %}"></script>
   <script src="{% static 'core/libs/input-mask/min/inputmask/jquery.inputmask.min.js' %}"></script>
   <!--DataTables-->
-  <script src="{% static 'core/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
-  <script src="{% static 'core/libs/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+  <script src="{% static 'core/libs/DataTables/jquery.dataTables.min.js' %}"></script>
+  <!-- <script src="{% static 'core/libs/DataTables/dataTables.min.js' %}"></script> -->
+  <script src="{% static 'core/libs/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js' %}"></script>
+  <script src="{% static 'core\libs\DataTables\Responsive-2.2.2\js\dataTables.responsive.min.js' %}"></script>
   <!--Script Pessoal-->
   <script src="{% static 'core/js/pesonal.js' %}"></script>
   <script>
@@ -413,6 +347,7 @@ desired effect
     function capitalizeFirstLetter(string){
         return string.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
+
   </script>
   {% block Scripts %}
   {% endblock Scripts %}

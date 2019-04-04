@@ -1,60 +1,35 @@
-from django.forms  import ModelForm, TextInput, Select, EmailInput, DateInput, HiddenInput
+from django import forms
 from .models import Client, Automovel
 
-class ClientForm(ModelForm):
+class ClientForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(ClientForm, self).__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class':'form-control', 'placeholder':'Nome'})
+        self.fields['age'].widget.attrs.update({'class':'form-control', 'placeholder':'Idade'})
+        self.fields['sexo'].widget.attrs.update({'class':'form-control', 'placeholder':'Sexo'})
+        self.fields['rg'].widget.attrs.update({'class':'form-control', 'placeholder':'Rg'})
+        self.fields['cpf'].widget.attrs.update({'class':'form-control', 'placeholder':'CPF'})
+        self.fields['email'].widget.attrs.update({'class':'form-control', 'placeholder':'E-mail'})
+        self.fields['data_nascimento'].widget.attrs.update({'class':'form-control', 'datemask':''})
+
+    
     class Meta:
         model = Client
         fields = '__all__'  #['name','age','sexo','rg','cpf','email','data_nascimento']
-        widgets = {
-            'name': TextInput(attrs={
-                "placeholder":"Nome",
-                "class":"form-control"
-             }),
-            'age':TextInput(attrs={
-                'class':'form-control',
-                'placeholder':'Idade'
-            }),
-            'sexo': Select(attrs={
-                'class':'form-control',
-                'placeholder':"Sexo"
-            }),
-            'rg': TextInput(attrs={
-                'class':'form-control',
-                'rg-mask':''
-            }),
-            'cpf': TextInput(attrs={
-                'class':'form-control',
-                'cpf-mask':''
-            }),
-            'email': EmailInput(attrs={
-                'class':'form-control',
-            }),
-            'data_nascimento': DateInput(attrs={
-                'class':'form-control',
-                'datemask':''
-            })
-        }
 
 
-class AutomovelForm(ModelForm):
+class AutomovelForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(AutomovelForm, self).__init__(*args, **kwargs)
+        self.fields['marca'].widget.attrs.update({'class':'form-control', 'placeholder':'Marca'})
+        self.fields['modelo'].widget.attrs.update({'class':'form-control', 'placeholder':'Modelo'})
+        self.fields['ano'].widget.attrs.update({'class':'form-control', 'placeholder':'Ano'})
+        self.fields['cor'].widget.attrs.update({'class':'form-control', 'placeholder':'Cor'})
+
+
     class Meta:
         model = Automovel
-        fields = ['client','marca','modelo','ano','cor']  #[marca, modelo, ano, cor]
-        widgets ={
-            'marca': TextInput(attrs={
-                'class': 'form-control',
-                'placeholder':'Marca'
-            }),
-            'modelo': TextInput(attrs={
-                'class': 'form-control',
-                'placeholder':'Modelo'
-            }),
-            'ano': TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Ano'
-            }),
-            'cor': TextInput(attrs={
-                'class':'form-control',
-                'placeholder': 'Cor'
-            })
-        }
+        fields = '__all__'  #[client, marca, modelo, ano, cor]
+       

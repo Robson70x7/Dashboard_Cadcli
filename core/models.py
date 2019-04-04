@@ -8,7 +8,7 @@ SEXO_CHOICES = (
 class Client(models.Model):
     name = models.CharField('Nome', max_length=50,)
     age = models.IntegerField( verbose_name='Idade')
-    sexo = models.CharField('Sexo', max_length=10,choices= SEXO_CHOICES,default='')
+    sexo = models.CharField('Sexo', max_length=10, choices= SEXO_CHOICES, default='')
     rg = models.CharField('RG', max_length=20)
     cpf = models.CharField('CPF', max_length=20)
     email = models.EmailField('E-mail', unique=True)
@@ -16,6 +16,12 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = 'name',
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+
 
 class Automovel(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
@@ -26,6 +32,7 @@ class Automovel(models.Model):
 
     def __str__(self):
         return f'Modelo: {self.modelo}, Marca: {self.marca}'
+        
 
 class Endereco(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)

@@ -35,7 +35,7 @@ def create(request):
         form_preenchido = ClientForm(dados_client or None)
 
         if form_preenchido.is_valid():
-            #Verificações
+            #Verifica se email já exist
             if service_client.verify_exist_email(dados['email']):
                 request.session['messages'] = {'error_message':'Este email ja existe em nossa base de dados, corrija-o e tente novamente'}
                 context_view['form'] = form_preenchido
@@ -56,7 +56,6 @@ def create(request):
         else:
             request.session['messages'] = {'success_message':'Cliente, e automovel cadastrado com sucesso'}
         
-    
     if 'messages' in request.session:
         message = request.session.pop('messages')
         context_view.update(message)
@@ -113,3 +112,4 @@ def detail(request, client_id):
     client = service_client.find(id=client_id)
     form = ClientForm(instance=client)
     return render(request, 'core/detail.html', {'form': form, 'client': client})
+

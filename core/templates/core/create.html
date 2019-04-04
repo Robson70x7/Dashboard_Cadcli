@@ -34,7 +34,7 @@ Create
 </div>
 
 {% endif %}
-
+    <!-- MODAL -->
     <div class="modal modal-danger fade" id="modal-danger">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -46,7 +46,7 @@ Create
           </div>
 
           <div class="modal-body">
-            <p id="modal_body">O formato da data está inválido, corrija antes de enviar o formulário</p>
+            <p id="modal_body">Você deixou o campo em branco ou formato da data está inválido, (dd/mm/aaaa) corrija antes de enviar o formulário</p>
           </div>
 
         </div>
@@ -102,25 +102,25 @@ Create
                             <fieldset>
                                 <legend class="font-italic">Automovel</legend>
                                 <div class="form-group">
-                                    <label>{{ form_auto.marca.label }}</label>
+                                    {{ form_auto.marca.label_tag }}
                                     {{form_auto.marca}}
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ form_auto.modelo.label }}</label>
+                                    {{ form_auto.modelo.label_tag }}
                                     {{form_auto.modelo}}
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ form_auto.cor.label }}</label>
+                                    {{ form_auto.cor.label_tag }}
                                     {{form_auto.cor}}
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ form_auto.ano.label }}</label>
+                                    {{ form_auto.ano.label_tag }}
                                     {{form_auto.ano}}
                                 </div>
                             </fieldset>
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary">
+                    <input type="submit" class="btn btn-primary" style="margin-right:15px ">
                     <input type="reset" class="btn btn-default">
                 </form>
             </div>

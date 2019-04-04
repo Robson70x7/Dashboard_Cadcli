@@ -1,19 +1,18 @@
 <ul class="sidebar-menu" data-widget="tree">
   <li class="header">Menu</li>
   <!-- Optionally, you can add icons to the links -->
-  <li class="active"><a class="client_menu" href="{% url 'core:index' %}"><i class="fas fa-list"></i> <span>Clientes</span></a></li>
-  <li><a href="#"><i class="fas fa-link"></i> <span>Anather link</span></a></li>
   <li class="treeview">
-    <a href="#"><i class="fas fa-link"></i> <span>Multilevel</span>
+    <a href="#"><i class="fas fa-list"></i> <span>Clientes</span>
       <span class="pull-right-container">
         <i class="fas fa-angle-left pull-right"></i>
       </span>
     </a>
     <ul class="treeview-menu">
-      <li><a href="#">Link in level 2</a></li>
-      <li><a href="#">Link in level 2</a></li>
+        <li><a class="client_menu" href="{% url 'core:index' %}"><span>Listar</span></a></li>
+        <li><a class="client_menu" href="{% url 'core:create' %}"><span>Novo</span></a></li>
     </ul>
   </li>
-</ul>
-
   
+  <li><a href="#"><i class="fas fa-link"></i> <span>Anather link</span> </a></li>
+
+</ul>
