@@ -113,3 +113,6 @@ def detail(request, client_id):
     form = ClientForm(instance=client)
     return render(request, 'core/detail.html', {'form': form, 'client': client})
 
+def imprimir(request, client_id):
+    client = service_client.find(id=client_id)
+    return render(request, 'core/print.html', {'client':client})    
